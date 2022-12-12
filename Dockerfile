@@ -11,6 +11,14 @@ ENV PYTHONPATH "/usr/lib/python3.11/site-packages/"
 RUN apk add --no-cache ca-certificates \
     --repository http://dl-3.alpinelinux.org/alpine/edge/community/ \
     jq curl bash nodejs aws-cli && \
+    apk add --no-cache aws-cli && \
+    apk add --no-cache \
+        python3 \
+        py3-pip \
+    && pip3 install --upgrade pip \
+    && pip3 install --no-cache-dir \
+        awscli \
+    && rm -rf /var/cache/apk/* && \
     # Install helm version 2:
     curl -L ${BASE_URL}/${HELM_2_FILE} |tar xvz && \
     mv linux-amd64/helm /usr/bin/helm && \
